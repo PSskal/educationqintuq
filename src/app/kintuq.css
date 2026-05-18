@@ -1,0 +1,92 @@
+/* ── Kintuq Design Tokens (ported from the design prototype) ───────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Type */
+  --font-display: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+  --font-ui: 'Inter Tight', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Earthy / "Soft sunrise" palette — default */
+  --bg: #F7F2E8;
+  --bg-2: #EFE8D8;
+  --surface: #FCFAF4;
+  --ink: #2A1F17;
+  --ink-2: #5C4A3D;
+  --muted: #9B8F80;
+  --hairline: #E5DCC8;
+
+  --terracotta: #D97757;
+  --terracotta-deep: #B85A3D;
+  --sage: #5B7C5A;
+  --sage-deep: #3F5B40;
+  --gold: #E5B86A;
+  --gold-deep: #C99A4A;
+  --stone: #9B9389;
+  --sky: #8AA9B8;
+
+  --accent: var(--terracotta);
+  --accent-ink: #fff;
+
+  /* Radii */
+  --r-xs: 6px;
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-pill: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(58, 34, 18, 0.06), 0 2px 8px rgba(58, 34, 18, 0.04);
+  --shadow-md: 0 2px 6px rgba(58, 34, 18, 0.08), 0 12px 24px rgba(58, 34, 18, 0.06);
+  --shadow-lg: 0 8px 16px rgba(58, 34, 18, 0.10), 0 32px 64px rgba(58, 34, 18, 0.10);
+  --shadow-inset: inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+/* ── Palette variants ────────────────────────────────────────────── */
+[data-palette="sunrise"] {
+  --bg: #F7F2E8; --bg-2: #EFE8D8; --surface: #FCFAF4;
+  --ink: #2A1F17; --ink-2: #5C4A3D; --muted: #9B8F80; --hairline: #E5DCC8;
+  --accent: #D97757; --terracotta: #D97757; --sage: #5B7C5A; --gold: #E5B86A;
+}
+[data-palette="alpaca"] {
+  --bg: #EFE7D8; --bg-2: #E2D6BF; --surface: #F7F1E3;
+  --ink: #3A2A22; --ink-2: #6B5447; --muted: #9C8772; --hairline: #D6C7AC;
+  --accent: #B8633E; --terracotta: #B8633E; --sage: #6E7F4E; --gold: #E8C16A;
+}
+[data-palette="dusk"] {
+  --bg: #1F1A14; --bg-2: #2A231C; --surface: #2F2820;
+  --ink: #F5EFE2; --ink-2: #C9C0B0; --muted: #877E70; --hairline: #3D362C;
+  --accent: #E07A4F; --terracotta: #E07A4F; --sage: #7FA180; --gold: #F0C464;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.25);
+  --shadow-md: 0 2px 6px rgba(0,0,0,0.45), 0 12px 24px rgba(0,0,0,0.30);
+  --shadow-lg: 0 8px 16px rgba(0,0,0,0.50), 0 32px 64px rgba(0,0,0,0.40);
+}
+
+/* ── Base — scoped to the Kintuq tree so shadcn auth pages stay intact ── */
+.kintuq-root {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'ss01', 'cv11';
+  min-height: 100vh;
+}
+.kintuq-root * { box-sizing: border-box; }
+
+.kintuq-root .serif { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
+.kintuq-root .mono { font-family: var(--font-mono); }
+.kintuq-root .eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.kintuq-root .hairline { border: 1px solid var(--hairline); }
+.kintuq-root .noscroll::-webkit-scrollbar { display: none; }
+.kintuq-root .noscroll { scrollbar-width: none; }
+.kintuq-root button { font-family: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }
