@@ -4,12 +4,12 @@ import { Icon, Waveform, TextileBand, DiamondMark, PhotoPlaceholder, type Lang }
 
 const useT = (lang: Lang) => (en: string, es: string) => (lang === "en" ? en : es);
 
-export const ManifestoScreen = ({ lang = "en" }: { lang?: Lang }) => {
+export const ManifestoScreen = ({ lang = "en", onBack }: { lang?: Lang; onBack?: () => void }) => {
   const t = useT(lang);
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", overflowY: "auto" }}>
       <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button onClick={onBack} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="chevron-l" size={16} />
         </button>
         <div className="eyebrow">{t("Manifesto", "Manifiesto")}</div>
@@ -62,7 +62,7 @@ export const ManifestoScreen = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-export const VoicesDirectory = ({ lang = "en" }: { lang?: Lang }) => {
+export const VoicesDirectory = ({ lang = "en", onBack }: { lang?: Lang; onBack?: () => void }) => {
   const t = useT(lang);
   const regions = [
     { name: "Cusco", voices: [
@@ -79,7 +79,7 @@ export const VoicesDirectory = ({ lang = "en" }: { lang?: Lang }) => {
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", overflowY: "auto" }}>
       <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button onClick={onBack} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="chevron-l" size={16} />
         </button>
         <div className="eyebrow">{t("Voices", "Voces")}</div>
@@ -139,12 +139,12 @@ export const VoicesDirectory = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-export const ShareableCard = ({ lang = "en" }: { lang?: Lang }) => {
+export const ShareableCard = ({ lang = "en", onClose }: { lang?: Lang; onClose?: () => void }) => {
   const t = useT(lang);
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--ink)", display: "flex", flexDirection: "column" }}>
       <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button onClick={onClose} style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="x" size={16} stroke="var(--bg)" />
         </button>
         <div className="eyebrow" style={{ color: "rgba(247,242,232,0.7)" }}>{t("Share preview", "Vista previa")}</div>

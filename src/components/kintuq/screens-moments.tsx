@@ -4,7 +4,7 @@ import { Icon, KButton, TextileBand, DiamondMark, type Lang } from "./primitives
 
 const useT = (lang: Lang) => (en: string, es: string) => (lang === "en" ? en : es);
 
-export const AchievementUnlocked = ({ lang = "en" }: { lang?: Lang }) => {
+export const AchievementUnlocked = ({ lang = "en", onClose }: { lang?: Lang; onClose?: () => void }) => {
   const t = useT(lang);
   return (
     <div style={{ width: "100%", height: "100%", background: "linear-gradient(180deg, var(--terracotta) 0%, var(--gold) 100%)", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
@@ -22,7 +22,7 @@ export const AchievementUnlocked = ({ lang = "en" }: { lang?: Lang }) => {
         <TextileBand height={14} />
       </div>
       <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "flex-end" }}>
-        <button style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button onClick={onClose} style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="x" size={16} stroke="#fff" />
         </button>
       </div>
@@ -50,7 +50,7 @@ export const AchievementUnlocked = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-export const StreakCalendar = ({ lang = "en" }: { lang?: Lang }) => {
+export const StreakCalendar = ({ lang = "en", onBack }: { lang?: Lang; onBack?: () => void }) => {
   const t = useT(lang);
   const days = Array.from({ length: 35 }, (_, i) => {
     const day = i - 5;
@@ -63,7 +63,7 @@ export const StreakCalendar = ({ lang = "en" }: { lang?: Lang }) => {
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
       <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button onClick={onBack} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="chevron-l" size={16} />
         </button>
         <div className="eyebrow">{t("Your fire", "Tu fuego")}</div>
@@ -119,7 +119,7 @@ export const StreakCalendar = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-export const Paywall = ({ lang = "en" }: { lang?: Lang }) => {
+export const Paywall = ({ lang = "en", onClose }: { lang?: Lang; onClose?: () => void }) => {
   const t = useT(lang);
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--ink)", color: "var(--bg)", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden" }}>
@@ -131,7 +131,7 @@ export const Paywall = ({ lang = "en" }: { lang?: Lang }) => {
       </div>
       <div style={{ position: "absolute", top: 80, right: -60, width: 220, height: 220, borderRadius: "50%", background: "radial-gradient(circle, color-mix(in oklab, var(--gold) 30%, transparent), transparent 70%)" }} />
       <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "flex-end", position: "relative" }}>
-        <button style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button onClick={onClose} style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="x" size={16} stroke="var(--bg)" />
         </button>
       </div>
@@ -190,12 +190,12 @@ export const Paywall = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-export const StreakInJeopardy = ({ lang = "en" }: { lang?: Lang }) => {
+export const StreakInJeopardy = ({ lang = "en", onClose }: { lang?: Lang; onClose?: () => void }) => {
   const t = useT(lang);
   return (
     <div style={{ width: "100%", height: "100%", background: "linear-gradient(180deg, var(--bg) 0%, color-mix(in oklab, var(--terracotta) 18%, var(--bg)) 100%)", display: "flex", flexDirection: "column" }}>
       <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "flex-end" }}>
-        <button style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button onClick={onClose} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="x" size={16} />
         </button>
       </div>

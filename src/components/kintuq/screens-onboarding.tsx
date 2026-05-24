@@ -4,10 +4,10 @@ import { Icon, KButton, TextileBand, DiamondMark, type Lang } from "./primitives
 
 const useT = (lang: Lang) => (en: string, es: string) => (lang === "en" ? en : es);
 
-export const SplashScreen = ({ lang = "en" }: { lang?: Lang }) => {
+export const SplashScreen = ({ lang = "en", onContinue }: { lang?: Lang; onContinue?: () => void }) => {
   const t = useT(lang);
   return (
-    <div style={{ width: "100%", height: "100%", background: "linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 20, position: "relative", overflow: "hidden" }}>
+    <div onClick={onContinue} style={{ width: "100%", height: "100%", minHeight: "100vh", cursor: onContinue ? "pointer" : "default", background: "linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 20, position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, opacity: 0.35 }}>
         <TextileBand height={10} />
       </div>
@@ -21,7 +21,7 @@ export const SplashScreen = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-export const OnboardWelcome = ({ lang = "en" }: { lang?: Lang }) => {
+export const OnboardWelcome = ({ lang = "en", onBegin, onHaveAccount }: { lang?: Lang; onBegin?: () => void; onHaveAccount?: () => void }) => {
   const t = useT(lang);
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
@@ -45,16 +45,16 @@ export const OnboardWelcome = ({ lang = "en" }: { lang?: Lang }) => {
         </div>
       </div>
       <div style={{ padding: "20px 22px 40px", display: "flex", flexDirection: "column", gap: 10 }}>
-        <KButton variant="accent" size="lg" full iconRight="arrow-r">{t("Begin", "Comenzar")}</KButton>
-        <KButton variant="plain" size="md" full>{t("I already have an account", "Ya tengo cuenta")}</KButton>
+        <KButton variant="accent" size="lg" full iconRight="arrow-r" onClick={onBegin}>{t("Begin", "Comenzar")}</KButton>
+        <KButton variant="plain" size="md" full onClick={onHaveAccount}>{t("I already have an account", "Ya tengo cuenta")}</KButton>
       </div>
     </div>
   );
 };
 
-const OnboardProgress = ({ pct, step }: { pct: string; step: string }) => (
+const OnboardProgress = ({ pct, step, onBack }: { pct: string; step: string; onBack?: () => void }) => (
   <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-    <button style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <button onClick={onBack} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <Icon name="chevron-l" size={16} />
     </button>
     <div style={{ flex: 1, padding: "0 12px" }}>
@@ -66,7 +66,7 @@ const OnboardProgress = ({ pct, step }: { pct: string; step: string }) => (
   </div>
 );
 
-export const OnboardMotivation = ({ lang = "en" }: { lang?: Lang }) => {
+export const OnboardMotivation = ({ lang = "en", onBack, onNext }: { lang?: Lang; onBack?: () => void; onNext?: () => void }) => {
   const t = useT(lang);
   const opts = [
     { id: "travel", icon: "mountain", en: "Travel to the Andes", es: "Viajar a los Andes" },
@@ -77,7 +77,7 @@ export const OnboardMotivation = ({ lang = "en" }: { lang?: Lang }) => {
   ];
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
-      <OnboardProgress pct="33%" step="1/3" />
+      <OnboardProgress pct="33%" step="1/3" onBack={onBack} />
       <div style={{ flex: 1, padding: "32px 22px 0", display: "flex", flexDirection: "column" }}>
         <div className="eyebrow">{t("Tell us", "Cuéntanos")}</div>
         <div className="serif" style={{ fontSize: 36, lineHeight: 1.05, color: "var(--ink)", marginTop: 8, letterSpacing: "-0.01em" }}>{t("Why are you learning Quechua?", "¿Por qué estás aprendiendo quechua?")}</div>
@@ -95,13 +95,13 @@ export const OnboardMotivation = ({ lang = "en" }: { lang?: Lang }) => {
         </div>
       </div>
       <div style={{ padding: "20px 22px 40px" }}>
-        <KButton variant="primary" size="lg" full iconRight="arrow-r">{t("Continue", "Continuar")}</KButton>
+        <KButton variant="primary" size="lg" full iconRight="arrow-r" onClick={onNext}>{t("Continue", "Continuar")}</KButton>
       </div>
     </div>
   );
 };
 
-export const OnboardGoal = ({ lang = "en" }: { lang?: Lang }) => {
+export const OnboardGoal = ({ lang = "en", onBack, onNext }: { lang?: Lang; onBack?: () => void; onNext?: () => void }) => {
   const t = useT(lang);
   const goals = [
     { min: 3, label: t("Gentle", "Suave"), desc: t("A daily kintu", "Un kintu diario") },
@@ -111,7 +111,7 @@ export const OnboardGoal = ({ lang = "en" }: { lang?: Lang }) => {
   ];
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
-      <OnboardProgress pct="66%" step="2/3" />
+      <OnboardProgress pct="66%" step="2/3" onBack={onBack} />
       <div style={{ flex: 1, padding: "32px 22px 0" }}>
         <div className="eyebrow">{t("Daily goal", "Meta diaria")}</div>
         <div className="serif" style={{ fontSize: 36, lineHeight: 1.05, color: "var(--ink)", marginTop: 8, letterSpacing: "-0.01em" }}>{t("How much time can you give?", "¿Cuánto tiempo puedes dar?")}</div>
@@ -132,17 +132,17 @@ export const OnboardGoal = ({ lang = "en" }: { lang?: Lang }) => {
         </div>
       </div>
       <div style={{ padding: "20px 22px 40px" }}>
-        <KButton variant="primary" size="lg" full iconRight="arrow-r">{t("Continue", "Continuar")}</KButton>
+        <KButton variant="primary" size="lg" full iconRight="arrow-r" onClick={onNext}>{t("Continue", "Continuar")}</KButton>
       </div>
     </div>
   );
 };
 
-export const OnboardNotifications = ({ lang = "en" }: { lang?: Lang }) => {
+export const OnboardNotifications = ({ lang = "en", onBack, onDone }: { lang?: Lang; onBack?: () => void; onDone?: () => void }) => {
   const t = useT(lang);
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
-      <OnboardProgress pct="100%" step="3/3" />
+      <OnboardProgress pct="100%" step="3/3" onBack={onBack} />
       <div style={{ flex: 1, padding: "40px 22px 0", display: "flex", flexDirection: "column" }}>
         <div className="eyebrow">{t("A daily nudge", "Un recordatorio diario")}</div>
         <div className="serif" style={{ fontSize: 36, lineHeight: 1.05, color: "var(--ink)", marginTop: 8, letterSpacing: "-0.01em" }}>{t("Want a gentle reminder?", "¿Quieres un recordatorio suave?")}</div>
@@ -185,40 +185,108 @@ export const OnboardNotifications = ({ lang = "en" }: { lang?: Lang }) => {
         </div>
       </div>
       <div style={{ padding: "20px 22px 40px", display: "flex", flexDirection: "column", gap: 8 }}>
-        <KButton variant="accent" size="lg" full>{t("Allow notifications", "Permitir notificaciones")}</KButton>
-        <KButton variant="plain" size="md" full>{t("Maybe later", "Tal vez después")}</KButton>
+        <KButton variant="accent" size="lg" full onClick={onDone}>{t("Allow notifications", "Permitir notificaciones")}</KButton>
+        <KButton variant="plain" size="md" full onClick={onDone}>{t("Maybe later", "Tal vez después")}</KButton>
       </div>
     </div>
   );
 };
 
-export const SignInScreen = ({ lang = "en" }: { lang?: Lang }) => {
+export const SignInScreen = ({
+  lang = "en",
+  mode = "signin",
+  name = "",
+  email = "",
+  password = "",
+  onName,
+  onEmail,
+  onPassword,
+  onSubmit,
+  onGoogle,
+  onClose,
+  onSwitch,
+  loading = false,
+  error,
+  inputDefaults = true,
+}: {
+  lang?: Lang;
+  mode?: "signin" | "signup";
+  name?: string;
+  email?: string;
+  password?: string;
+  onName?: (v: string) => void;
+  onEmail?: (v: string) => void;
+  onPassword?: (v: string) => void;
+  onSubmit?: () => void;
+  onGoogle?: () => void;
+  onClose?: () => void;
+  onSwitch?: () => void;
+  loading?: boolean;
+  error?: string | null;
+  inputDefaults?: boolean;
+}) => {
   const t = useT(lang);
+  const controlled = !inputDefaults;
+  const inputStyle = { width: "100%", height: 52, padding: "0 18px", border: "1px solid var(--hairline)", borderRadius: "var(--r-md)", background: "var(--surface)", fontSize: 15, color: "var(--ink)", fontFamily: "var(--font-ui)" } as const;
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
       <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button onClick={onClose} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="x" size={16} />
         </button>
         <DiamondMark size={26} color="var(--ink)" />
         <div style={{ width: 36 }} />
       </div>
       <div style={{ flex: 1, padding: "40px 28px 0" }}>
-        <div className="serif" style={{ fontSize: 44, lineHeight: 1.05, color: "var(--ink)", letterSpacing: "-0.02em" }}>{t("Welcome back.", "Bienvenida de vuelta.")}</div>
-        <p style={{ fontSize: 15, color: "var(--ink-2)", marginTop: 8 }}>{t("Pick up your streak where you left off.", "Continúa donde dejaste tu racha.")}</p>
-        <div style={{ marginTop: 32 }}>
+        <div className="serif" style={{ fontSize: 44, lineHeight: 1.05, color: "var(--ink)", letterSpacing: "-0.02em" }}>
+          {mode === "signup" ? t("Create an account.", "Crea tu cuenta.") : t("Welcome back.", "Bienvenida de vuelta.")}
+        </div>
+        <p style={{ fontSize: 15, color: "var(--ink-2)", marginTop: 8 }}>
+          {mode === "signup" ? t("Begin your kintu — three minutes a day.", "Comienza tu kintu — tres minutos al día.") : t("Pick up your streak where you left off.", "Continúa donde dejaste tu racha.")}
+        </p>
+        {mode === "signup" && (
+          <div style={{ marginTop: 32 }}>
+            <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>{t("Name", "Nombre")}</label>
+            <input
+              placeholder={t("Sara", "Sara")}
+              value={controlled ? name : undefined}
+              defaultValue={controlled ? undefined : "Sara"}
+              onChange={onName ? (e) => onName(e.target.value) : undefined}
+              style={inputStyle}
+            />
+          </div>
+        )}
+        <div style={{ marginTop: mode === "signup" ? 14 : 32 }}>
           <label className="eyebrow" style={{ display: "block", marginBottom: 8 }}>{t("Email", "Correo")}</label>
-          <input placeholder="sara@example.com" defaultValue="sara@example.com" style={{ width: "100%", height: 52, padding: "0 18px", border: "1px solid var(--hairline)", borderRadius: "var(--r-md)", background: "var(--surface)", fontSize: 15, color: "var(--ink)", fontFamily: "var(--font-ui)" }} />
+          <input
+            placeholder="sara@example.com"
+            value={controlled ? email : undefined}
+            defaultValue={controlled ? undefined : "sara@example.com"}
+            onChange={onEmail ? (e) => onEmail(e.target.value) : undefined}
+            onKeyDown={(e) => e.key === "Enter" && onSubmit?.()}
+            style={inputStyle}
+          />
         </div>
         <div style={{ marginTop: 14 }}>
           <label className="eyebrow" style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
             <span>{t("Password", "Contraseña")}</span>
-            <a style={{ textTransform: "none", letterSpacing: 0, color: "var(--terracotta)", fontWeight: 600 }}>{t("Forgot?", "¿Olvidaste?")}</a>
+            {mode === "signin" && <a style={{ textTransform: "none", letterSpacing: 0, color: "var(--terracotta)", fontWeight: 600 }}>{t("Forgot?", "¿Olvidaste?")}</a>}
           </label>
-          <input type="password" placeholder="••••••••" defaultValue="••••••••" style={{ width: "100%", height: 52, padding: "0 18px", border: "1px solid var(--hairline)", borderRadius: "var(--r-md)", background: "var(--surface)", fontSize: 15, color: "var(--ink)", fontFamily: "var(--font-ui)", letterSpacing: "0.2em" }} />
+          <input
+            type="password"
+            placeholder="••••••••"
+            value={controlled ? password : undefined}
+            defaultValue={controlled ? undefined : "••••••••"}
+            onChange={onPassword ? (e) => onPassword(e.target.value) : undefined}
+            onKeyDown={(e) => e.key === "Enter" && onSubmit?.()}
+            style={{ ...inputStyle, letterSpacing: "0.2em" }}
+          />
         </div>
+        {error && <div style={{ marginTop: 14, fontSize: 13, color: "var(--terracotta-deep)", fontWeight: 500 }}>{error}</div>}
         <div style={{ marginTop: 22 }}>
-          <KButton variant="primary" size="lg" full iconRight="arrow-r">{t("Sign in", "Iniciar sesión")}</KButton>
+          <KButton variant="primary" size="lg" full iconRight="arrow-r" onClick={onSubmit} disabled={loading}>
+            {loading ? t("Please wait…", "Un momento…") : mode === "signup" ? t("Create account", "Crear cuenta") : t("Sign in", "Iniciar sesión")}
+          </KButton>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "28px 0" }}>
           <div style={{ flex: 1, height: 1, background: "var(--hairline)" }} />
@@ -226,19 +294,17 @@ export const SignInScreen = ({ lang = "en" }: { lang?: Lang }) => {
           <div style={{ flex: 1, height: 1, background: "var(--hairline)" }} />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <button style={{ height: 52, borderRadius: "var(--r-md)", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, fontSize: 14, fontWeight: 500, color: "var(--ink)" }}>
+          <button onClick={onGoogle} style={{ height: 52, borderRadius: "var(--r-md)", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, fontSize: 14, fontWeight: 500, color: "var(--ink)" }}>
             <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" /><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" /><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" /><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" /></svg>
             {t("Continue with Google", "Continuar con Google")}
-          </button>
-          <button style={{ height: 52, borderRadius: "var(--r-md)", background: "var(--ink)", border: "1px solid var(--ink)", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, fontSize: 14, fontWeight: 500, color: "var(--bg)" }}>
-            <svg width="16" height="20" viewBox="0 0 16 20" fill="var(--bg)"><path d="M13.6 10.4c0-2.5 2.1-3.7 2.2-3.8-1.2-1.7-3-2-3.7-2-1.6-.2-3.1.9-3.9.9s-2-.9-3.4-.9c-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.3 2.5 1.3-.1 1.8-.9 3.4-.9s2 .9 3.4.8c1.4 0 2.3-1.2 3.2-2.5 1-1.4 1.4-2.8 1.4-2.9-.1-.1-2.7-1-2.7-4z" /></svg>
-            {t("Continue with Apple", "Continuar con Apple")}
           </button>
         </div>
       </div>
       <div style={{ padding: "20px 28px 40px", textAlign: "center" }}>
-        <span style={{ fontSize: 13, color: "var(--muted)" }}>{t("New here?", "¿Nueva aquí?")} </span>
-        <a style={{ fontSize: 13, color: "var(--terracotta)", fontWeight: 600 }}>{t("Create an account", "Crea una cuenta")}</a>
+        <span style={{ fontSize: 13, color: "var(--muted)" }}>{mode === "signup" ? t("Already have an account?", "¿Ya tienes cuenta?") : t("New here?", "¿Nueva aquí?")} </span>
+        <a onClick={onSwitch} style={{ fontSize: 13, color: "var(--terracotta)", fontWeight: 600, cursor: "pointer" }}>
+          {mode === "signup" ? t("Sign in", "Iniciar sesión") : t("Create an account", "Crea una cuenta")}
+        </a>
       </div>
     </div>
   );

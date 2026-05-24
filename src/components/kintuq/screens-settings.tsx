@@ -29,13 +29,13 @@ const Row = ({ icon, label, value, last, chev = true, toggle }: { icon: string; 
   </div>
 );
 
-export const SettingsScreen = ({ lang = "en" }: { lang?: Lang }) => {
+export const SettingsScreen = ({ lang = "en", onBack }: { lang?: Lang; onBack?: () => void }) => {
   const t = (en: string, es: string) => (lang === "en" ? en : es);
 
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
       <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button onClick={onBack} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="chevron-l" size={16} />
         </button>
         <div className="eyebrow">{t("Settings", "Ajustes")}</div>

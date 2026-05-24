@@ -46,7 +46,7 @@ export default function Home() {
           </button>
         ))}
       </div>
-      <Landing lang={lang} onLaunchApp={() => router.push("/app")} />
+      <Landing lang={lang} onLaunchApp={() => router.push("/dashboard")} />
     </div>
   );
 }

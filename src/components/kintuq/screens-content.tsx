@@ -4,7 +4,7 @@ import { Icon, KButton, Waveform, StatPill, PhotoPlaceholder, type Lang } from "
 
 const useT = (lang: Lang) => (en: string, es: string) => (lang === "en" ? en : es);
 
-export const LessonsLibrary = ({ lang = "en" }: { lang?: Lang }) => {
+export const LessonsLibrary = ({ lang = "en", onOpenUnit }: { lang?: Lang; onOpenUnit?: () => void }) => {
   const t = useT(lang);
   const units = [
     { idx: 1, qu: "Napaykuy", en: "Greetings", es: "Saludos", done: 5, total: 5, tone: "valley" as const },
@@ -22,7 +22,7 @@ export const LessonsLibrary = ({ lang = "en" }: { lang?: Lang }) => {
       </div>
       <div style={{ flex: 1, padding: "24px 22px 32px", display: "flex", flexDirection: "column", gap: 14 }}>
         {units.map((u) => (
-          <button key={u.idx} disabled={u.lock} style={{ background: "var(--surface)", border: u.active ? "1.5px solid var(--accent)" : "1px solid var(--hairline)", borderRadius: "var(--r-lg)", overflow: "hidden", boxShadow: u.active ? "var(--shadow-md)" : "var(--shadow-sm)", opacity: u.lock ? 0.55 : 1, textAlign: "left", display: "flex", flexDirection: "column" }}>
+          <button key={u.idx} disabled={u.lock} onClick={() => !u.lock && onOpenUnit?.()} style={{ background: "var(--surface)", border: u.active ? "1.5px solid var(--accent)" : "1px solid var(--hairline)", borderRadius: "var(--r-lg)", overflow: "hidden", boxShadow: u.active ? "var(--shadow-md)" : "var(--shadow-sm)", opacity: u.lock ? 0.55 : 1, textAlign: "left", display: "flex", flexDirection: "column" }}>
             <div style={{ position: "relative", height: 88 }}>
               <PhotoPlaceholder ratio="auto" tone={u.tone} style={{ height: "100%", borderRadius: 0 }}>
                 <div style={{ position: "absolute", inset: 0, padding: 18, display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
@@ -57,7 +57,7 @@ export const LessonsLibrary = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-export const UnitDetail = ({ lang = "en" }: { lang?: Lang }) => {
+export const UnitDetail = ({ lang = "en", onBack, onContinue }: { lang?: Lang; onBack?: () => void; onContinue?: () => void }) => {
   const t = useT(lang);
   const lessons = [
     { idx: 1, qu: "Imatataq sutiyki?", en: "What is your name?", es: "¿Cómo te llamas?", dur: 5, state: "done" },
@@ -71,7 +71,7 @@ export const UnitDetail = ({ lang = "en" }: { lang?: Lang }) => {
       <div style={{ position: "relative", height: 220 }}>
         <PhotoPlaceholder ratio="auto" tone="mountain" style={{ height: "100%", borderRadius: 0 }}>
           <div style={{ position: "absolute", top: 50, left: 18, right: 18, display: "flex", justifyContent: "space-between" }}>
-            <button style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <button onClick={onBack} style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Icon name="chevron-l" size={16} stroke="#fff" />
             </button>
           </div>
@@ -106,13 +106,13 @@ export const UnitDetail = ({ lang = "en" }: { lang?: Lang }) => {
         </div>
       </div>
       <div style={{ padding: "14px 22px 30px", borderTop: "1px solid var(--hairline)", background: "var(--bg)" }}>
-        <KButton variant="accent" size="lg" full iconRight="arrow-r">{t("Continue lesson 3", "Continuar lección 3")}</KButton>
+        <KButton variant="accent" size="lg" full iconRight="arrow-r" onClick={onContinue}>{t("Continue lesson 3", "Continuar lección 3")}</KButton>
       </div>
     </div>
   );
 };
 
-export const VoicesList = ({ lang = "en" }: { lang?: Lang }) => {
+export const VoicesList = ({ lang = "en", onBack, onOpenSpeaker }: { lang?: Lang; onBack?: () => void; onOpenSpeaker?: () => void }) => {
   const t = useT(lang);
   const voices = [
     { name: "María Quispe", village: "San Blás, Cusco", age: 64, phrases: 47, tone: "valley" as const },
@@ -123,7 +123,7 @@ export const VoicesList = ({ lang = "en" }: { lang?: Lang }) => {
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
       <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button onClick={onBack} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="chevron-l" size={16} />
         </button>
         <div className="eyebrow">{t("Voices", "Voces")}</div>
@@ -137,7 +137,7 @@ export const VoicesList = ({ lang = "en" }: { lang?: Lang }) => {
       </div>
       <div style={{ flex: 1, padding: "24px 22px 32px", display: "flex", flexDirection: "column", gap: 12 }}>
         {voices.map((v) => (
-          <button key={v.name} style={{ background: "var(--surface)", border: "1px solid var(--hairline)", borderRadius: "var(--r-lg)", padding: 0, overflow: "hidden", display: "flex", gap: 0, textAlign: "left", alignItems: "stretch", boxShadow: "var(--shadow-sm)" }}>
+          <button key={v.name} onClick={onOpenSpeaker} style={{ background: "var(--surface)", border: "1px solid var(--hairline)", borderRadius: "var(--r-lg)", padding: 0, overflow: "hidden", display: "flex", gap: 0, textAlign: "left", alignItems: "stretch", boxShadow: "var(--shadow-sm)" }}>
             <div style={{ width: 100, flexShrink: 0 }}>
               <PhotoPlaceholder ratio="auto" tone={v.tone} style={{ height: "100%", borderRadius: 0 }} />
             </div>
@@ -159,7 +159,7 @@ export const VoicesList = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-export const SpeakerDetail = ({ lang = "en" }: { lang?: Lang }) => {
+export const SpeakerDetail = ({ lang = "en", onBack }: { lang?: Lang; onBack?: () => void }) => {
   const t = useT(lang);
   const phrases = [
     { qu: "Allillanchu", en: "How are you?", es: "¿Cómo estás?" },
@@ -172,7 +172,7 @@ export const SpeakerDetail = ({ lang = "en" }: { lang?: Lang }) => {
       <div style={{ position: "relative", height: 320 }}>
         <PhotoPlaceholder ratio="auto" tone="valley" style={{ height: "100%", borderRadius: 0 }}>
           <div style={{ position: "absolute", top: 50, left: 18, right: 18, display: "flex", justifyContent: "space-between" }}>
-            <button style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <button onClick={onBack} style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Icon name="chevron-l" size={16} stroke="#fff" />
             </button>
             <button style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center" }}>

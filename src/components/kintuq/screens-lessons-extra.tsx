@@ -4,12 +4,12 @@ import { Icon, KButton, Waveform, DiamondMark, PhotoPlaceholder, type Lang } fro
 
 const useT = (lang: Lang) => (en: string, es: string) => (lang === "en" ? en : es);
 
-export const PronunciationDeep = ({ lang = "en" }: { lang?: Lang }) => {
+export const PronunciationDeep = ({ lang = "en", onClose }: { lang?: Lang; onClose?: () => void }) => {
   const t = useT(lang);
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
       <div style={{ padding: "60px 22px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <button onClick={onClose} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <Icon name="x" size={16} />
         </button>
         <div className="eyebrow">{t("Pronunciation", "Pronunciación")}</div>
@@ -80,14 +80,14 @@ export const PronunciationDeep = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-export const StoryMode = ({ lang = "en" }: { lang?: Lang }) => {
+export const StoryMode = ({ lang = "en", onBack }: { lang?: Lang; onBack?: () => void }) => {
   const t = useT(lang);
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", overflowY: "auto" }}>
       <div style={{ position: "relative", height: 280 }}>
         <PhotoPlaceholder ratio="auto" tone="mountain" style={{ height: "100%", borderRadius: 0 }}>
           <div style={{ position: "absolute", top: 50, left: 18, right: 18, display: "flex", justifyContent: "space-between" }}>
-            <button style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <button onClick={onBack} style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(6px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Icon name="chevron-l" size={16} stroke="#fff" />
             </button>
             <div style={{ display: "flex", gap: 8 }}>
@@ -160,9 +160,9 @@ export const StoryMode = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-const LessonTopBar = ({ pct }: { pct: string }) => (
+const LessonTopBar = ({ pct, onClose }: { pct: string; onClose?: () => void }) => (
   <div style={{ padding: "60px 18px 16px", display: "flex", alignItems: "center", gap: 12 }}>
-    <button style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <button onClick={onClose} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--surface)", border: "1px solid var(--hairline)", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <Icon name="x" size={16} />
     </button>
     <div style={{ flex: 1, height: 6, background: "var(--hairline)", borderRadius: 3, overflow: "hidden" }}>
@@ -174,7 +174,7 @@ const LessonTopBar = ({ pct }: { pct: string }) => (
   </div>
 );
 
-export const LessonMatching = ({ lang = "en" }: { lang?: Lang }) => {
+export const LessonMatching = ({ lang = "en", onClose }: { lang?: Lang; onClose?: () => void }) => {
   const t = useT(lang);
   const pairs = [
     { qu: "Allillanchu", en: "How are you?", state: "matched" },
@@ -184,7 +184,7 @@ export const LessonMatching = ({ lang = "en" }: { lang?: Lang }) => {
   ];
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
-      <LessonTopBar pct="60%" />
+      <LessonTopBar pct="60%" onClose={onClose} />
       <div style={{ padding: "16px 22px 0" }}>
         <div className="eyebrow" style={{ marginBottom: 8 }}>{t("Match the pairs", "Empareja los pares")}</div>
         <div className="serif" style={{ fontSize: 22, lineHeight: 1.25, color: "var(--ink-2)", marginBottom: 20 }}>{t("Tap a word, then its meaning.", "Toca una palabra, luego su significado.")}</div>
@@ -212,11 +212,11 @@ export const LessonMatching = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-export const LessonType = ({ lang = "en" }: { lang?: Lang }) => {
+export const LessonType = ({ lang = "en", onClose }: { lang?: Lang; onClose?: () => void }) => {
   const t = useT(lang);
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
-      <LessonTopBar pct="40%" />
+      <LessonTopBar pct="40%" onClose={onClose} />
       <div style={{ padding: "16px 22px 0" }}>
         <div className="eyebrow" style={{ marginBottom: 8 }}>{t("Type what you hear", "Escribe lo que escuchas")}</div>
         <div className="serif" style={{ fontSize: 22, lineHeight: 1.25, color: "var(--ink-2)", marginBottom: 24 }}>{t("Listen carefully, then write the Quechua word.", "Escucha bien, luego escribe la palabra en quechua.")}</div>
@@ -264,11 +264,11 @@ export const LessonType = ({ lang = "en" }: { lang?: Lang }) => {
   );
 };
 
-export const LessonStory = ({ lang = "en" }: { lang?: Lang }) => {
+export const LessonStory = ({ lang = "en", onClose }: { lang?: Lang; onClose?: () => void }) => {
   const t = useT(lang);
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
-      <LessonTopBar pct="80%" />
+      <LessonTopBar pct="80%" onClose={onClose} />
       <div style={{ padding: "16px 22px 0" }}>
         <div className="eyebrow" style={{ marginBottom: 8 }}>{t("Listen to the story", "Escucha la historia")}</div>
         <div className="serif" style={{ fontSize: 22, lineHeight: 1.25, color: "var(--ink-2)", marginBottom: 20 }}>{t("Where did the grandmother offer her kintu?", "¿Dónde ofreció su kintu la abuela?")}</div>
