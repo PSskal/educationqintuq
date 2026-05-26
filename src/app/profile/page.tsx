@@ -1,12 +1,15 @@
 "use client";
 import "../kintuq.css";
-import { KintuqScreen } from "@/components/kintuq/Shell";
+import { ResponsiveKintuqScreen } from "@/components/kintuq/Shell";
 import { ProfileScreen } from "@/components/kintuq/screens";
+import { ProfileCentered } from "@/components/kintuq/screens-centered";
 
 export default function ProfilePage() {
   return (
-    <KintuqScreen tabBar>
-      <ProfileScreen lang="en" />
-    </KintuqScreen>
+    <ResponsiveKintuqScreen
+      tabBar
+      mobile={<ProfileScreen lang="en" />}
+      desktop={<ProfileCentered lang="en" />}
+    />
   );
 }

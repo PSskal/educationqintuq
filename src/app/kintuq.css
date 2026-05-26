@@ -90,3 +90,279 @@
 .kintuq-root .noscroll::-webkit-scrollbar { display: none; }
 .kintuq-root .noscroll { scrollbar-width: none; }
 .kintuq-root button { font-family: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }
+
+.kintuq-adaptive-desktop {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .kintuq-adaptive-mobile {
+    display: none;
+  }
+
+  .kintuq-adaptive-desktop {
+    display: block;
+  }
+}
+
+/* ── Landing responsive layer ─────────────────────────────────────
+   The landing was composed with inline prototype styles. These scoped
+   rules preserve the art direction while making layout decisions fluid. */
+.kintuq-root .landing-nav,
+.kintuq-root .landing-hero,
+.kintuq-root .landing-section,
+.kintuq-root .landing-section-inner,
+.kintuq-root .landing-footer {
+  width: min(100%, 1280px);
+}
+
+.kintuq-root .landing-hero-title {
+  font-size: clamp(3.35rem, 8vw, 5.5rem) !important;
+  max-width: 12ch;
+}
+
+.kintuq-root .landing-section-title {
+  font-size: clamp(2.6rem, 5.8vw, 4rem) !important;
+}
+
+.kintuq-root .landing-cta-title {
+  font-size: clamp(2.75rem, 6.6vw, 4.5rem) !important;
+}
+
+.kintuq-root .landing-hero-copy {
+  font-size: clamp(1rem, 1.7vw, 1.1875rem) !important;
+}
+
+.kintuq-root .landing-hero-media {
+  min-height: 420px;
+  height: min(640px, 52vw) !important;
+}
+
+.kintuq-root .landing-nav a,
+.kintuq-root .landing-nav button,
+.kintuq-root .landing-hero-actions button,
+.kintuq-root .landing-cta-actions button {
+  min-height: 44px;
+}
+
+.kintuq-root .landing-voice-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)) !important;
+}
+
+@media (max-width: 1080px) {
+  .kintuq-root .landing-nav {
+    padding: 22px 28px !important;
+  }
+
+  .kintuq-root .landing-nav-links {
+    gap: 18px !important;
+  }
+
+  .kintuq-root .landing-hero,
+  .kintuq-root .landing-section {
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .kintuq-root .landing-hero-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 44px !important;
+  }
+
+  .kintuq-root .landing-hero-title {
+    max-width: 14ch;
+  }
+
+  .kintuq-root .landing-hero-copy {
+    max-width: 680px !important;
+  }
+
+  .kintuq-root .landing-hero-media {
+    height: clamp(430px, 72vw, 560px) !important;
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .kintuq-root .landing-about-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 48px !important;
+  }
+
+  .kintuq-root .landing-about-copy {
+    position: static !important;
+  }
+
+  .kintuq-root .landing-section-heading {
+    align-items: flex-start !important;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 760px) {
+  .kintuq-root {
+    overflow-x: hidden;
+  }
+
+  .kintuq-root .landing-nav {
+    padding: 18px 18px 12px !important;
+    gap: 16px;
+    align-items: flex-start !important;
+  }
+
+  .kintuq-root .landing-nav-links {
+    display: none !important;
+  }
+
+  .kintuq-root .landing-nav-actions {
+    gap: 8px !important;
+  }
+
+  .kintuq-root .landing-nav-actions > button:first-child {
+    display: none !important;
+  }
+
+  .kintuq-root .landing-hero {
+    padding: 28px 18px 58px !important;
+  }
+
+  .kintuq-root .landing-beta-pill {
+    margin-bottom: 20px !important;
+  }
+
+  .kintuq-root .landing-hero-title {
+    font-size: clamp(3rem, 16vw, 4.75rem) !important;
+    max-width: 10.5ch;
+  }
+
+  .kintuq-root .landing-hero-copy {
+    margin-top: 20px !important;
+    max-width: 32rem !important;
+  }
+
+  .kintuq-root .landing-hero-actions,
+  .kintuq-root .landing-cta-actions {
+    align-items: stretch !important;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .kintuq-root .landing-hero-actions button,
+  .kintuq-root .landing-cta-actions button {
+    width: 100% !important;
+  }
+
+  .kintuq-root .landing-social-proof {
+    align-items: flex-start !important;
+    gap: 18px !important;
+    margin-top: 32px !important;
+  }
+
+  .kintuq-root .landing-hero-media {
+    height: clamp(390px, 110vw, 500px) !important;
+  }
+
+  .kintuq-root .landing-float-card {
+    transform: scale(0.9);
+    transform-origin: center;
+  }
+
+  .kintuq-root .landing-float-audio {
+    left: 12px !important;
+    top: 28px !important;
+    min-width: 210px !important;
+  }
+
+  .kintuq-root .landing-float-word {
+    right: 10px !important;
+    bottom: 36px !important;
+    min-width: 172px !important;
+  }
+
+  .kintuq-root .landing-float-streak {
+    right: 12px !important;
+    top: 158px !important;
+  }
+
+  .kintuq-root .landing-section,
+  .kintuq-root .landing-voices,
+  .kintuq-root .landing-pricing {
+    padding-top: 76px !important;
+    padding-bottom: 76px !important;
+  }
+
+  .kintuq-root .landing-section,
+  .kintuq-root .landing-section-inner {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .kintuq-root .landing-section-heading,
+  .kintuq-root .landing-footer {
+    flex-direction: column;
+  }
+
+  .kintuq-root .landing-section-heading {
+    margin-bottom: 36px !important;
+  }
+
+  .kintuq-root .landing-step {
+    grid-template-columns: 96px minmax(0, 1fr) !important;
+    gap: 18px !important;
+    padding: 24px 0 !important;
+  }
+
+  .kintuq-root .landing-step h3 {
+    font-size: 32px !important;
+  }
+
+  .kintuq-root .landing-stat-row {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 24px !important;
+    width: 100%;
+  }
+
+  .kintuq-root .landing-footer {
+    gap: 32px;
+    padding: 42px 18px 34px !important;
+  }
+
+  .kintuq-root .landing-footer > div:last-child {
+    flex-wrap: wrap;
+    gap: 32px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .kintuq-root .landing-hero-title {
+    font-size: clamp(2.7rem, 15vw, 3.75rem) !important;
+  }
+
+  .kintuq-root .landing-section-title {
+    font-size: clamp(2.25rem, 11vw, 3rem) !important;
+  }
+
+  .kintuq-root .landing-cta-title {
+    font-size: clamp(2.35rem, 12vw, 3.25rem) !important;
+  }
+
+  .kintuq-root .landing-step {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .kintuq-root .landing-step > div:first-child {
+    max-width: 150px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kintuq-root *,
+  .kintuq-root *::before,
+  .kintuq-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

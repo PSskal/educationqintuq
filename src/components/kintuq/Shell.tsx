@@ -101,3 +101,24 @@ export function KintuqScreen({
     </div>
   );
 }
+
+export function ResponsiveKintuqScreen({
+  mobile,
+  desktop,
+  tabBar = false,
+}: {
+  mobile: ReactNode;
+  desktop: ReactNode;
+  tabBar?: boolean;
+}) {
+  return (
+    <>
+      <div className="kintuq-adaptive-mobile">
+        <KintuqScreen tabBar={tabBar}>{mobile}</KintuqScreen>
+      </div>
+      <div className="kintuq-adaptive-desktop">
+        <KintuqScreen wide>{desktop}</KintuqScreen>
+      </div>
+    </>
+  );
+}

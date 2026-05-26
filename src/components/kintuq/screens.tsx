@@ -2,6 +2,7 @@
 // Kintuq — App screens (mobile)
 import * as React from "react";
 import { Icon, KButton, TextileBand, DiamondMark, Waveform, StatPill, type Lang } from "./primitives";
+import type { KintuqDashboardData } from "@/lib/kintuq-demo";
 
 // ─── Lesson data ─────────────────────────────────────────────────
 export const LESSON = {
@@ -55,8 +56,13 @@ export const DAILY_WORD = {
 const tr = (lang: Lang, en: string, es: string) => (lang === "en" ? en : es);
 
 // ─── DASHBOARD ───────────────────────────────────────────────────
-export const Dashboard = ({ lang, onStart, onWord }: { lang: Lang; onStart?: () => void; onWord?: () => void }) => {
+export const Dashboard = ({ lang, onStart, onWord, data }: { lang: Lang; onStart?: () => void; onWord?: () => void; data?: KintuqDashboardData | null }) => {
   const t = (en: string, es: string) => tr(lang, en, es);
+  const userName = data?.user.name || "Sara";
+  const stats = data?.stats ?? { streakDays: 7, xp: 1240, todayCompleted: 3, todayGoal: 3 };
+  const lesson = data?.activeLesson;
+  const dailyWord = data?.dailyWord;
+  const units = data?.units;
   return (
     <div style={{ background: "var(--bg)", minHeight: "100%", paddingBottom: 100 }}>
       <div style={{ padding: "60px 22px 0" }}>
@@ -66,16 +72,16 @@ export const Dashboard = ({ lang, onStart, onWord }: { lang: Lang; onStart?: () 
             <div className="serif" style={{ fontSize: 34, lineHeight: 1.0, marginTop: 4, color: "var(--ink)" }}>
               Allillanchu,
               <br />
-              <span style={{ fontStyle: "italic", color: "var(--ink-2)" }}>Sara</span>
+              <span style={{ fontStyle: "italic", color: "var(--ink-2)" }}>{userName.split(" ")[0]}</span>
             </div>
           </div>
-          <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg, #D97757, #E5B86A)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 600, fontSize: 16 }}>S</div>
+          <div style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg, #D97757, #E5B86A)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 600, fontSize: 16 }}>{userName.charAt(0).toUpperCase()}</div>
         </div>
 
         <div style={{ display: "flex", gap: 8, marginTop: 24, flexWrap: "wrap" }}>
-          <StatPill icon="flame" value="7" label={t("day streak", "días")} tone="flame" />
-          <StatPill icon="star" value="1,240" label="XP" tone="gold" />
-          <StatPill icon="leaf" value="3/3" label={t("today", "hoy")} tone="sage" />
+          <StatPill icon="flame" value={stats.streakDays} label={t("day streak", "días")} tone="flame" />
+          <StatPill icon="star" value={stats.xp.toLocaleString()} label="XP" tone="gold" />
+          <StatPill icon="leaf" value={`${stats.todayCompleted}/${stats.todayGoal}`} label={t("today", "hoy")} tone="sage" />
         </div>
       </div>
 
@@ -102,8 +108,8 @@ export const Dashboard = ({ lang, onStart, onWord }: { lang: Lang; onStart?: () 
           </div>
           <div>
             <div style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", opacity: 0.6 }}>{t("Continue lesson", "Continuar lección")}</div>
-            <div className="serif" style={{ fontSize: 24, marginTop: 6 }}>{LESSON.title.qu}</div>
-            <div style={{ fontSize: 13, opacity: 0.7, marginTop: 4 }}>{t(LESSON.title.en, LESSON.title.es)} · {t("5 min", "5 min")}</div>
+            <div className="serif" style={{ fontSize: 24, marginTop: 6 }}>{lesson?.title ?? LESSON.title.qu}</div>
+            <div style={{ fontSize: 13, opacity: 0.7, marginTop: 4 }}>{lesson ? t(lesson.titleEn, lesson.titleEs) : t(LESSON.title.en, LESSON.title.es)} · {lesson?.estimatedMinutes ?? 5} min</div>
           </div>
           <div style={{ width: 52, height: 52, borderRadius: "50%", background: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <Icon name="play" size={20} stroke="#fff" />
@@ -126,8 +132,8 @@ export const Dashboard = ({ lang, onStart, onWord }: { lang: Lang; onStart?: () 
             <DiamondMark size={32} color="#fff" />
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div className="serif" style={{ fontSize: 28, color: "var(--ink)", lineHeight: 1.0 }}>{DAILY_WORD.qu}</div>
-            <div style={{ fontSize: 13, color: "var(--ink-2)", marginTop: 4 }}>{lang === "en" ? DAILY_WORD.en.gloss : DAILY_WORD.es.gloss}</div>
+            <div className="serif" style={{ fontSize: 28, color: "var(--ink)", lineHeight: 1.0 }}>{dailyWord?.quechua ?? DAILY_WORD.qu}</div>
+            <div style={{ fontSize: 13, color: "var(--ink-2)", marginTop: 4 }}>{dailyWord ? (lang === "en" ? dailyWord.meaningEn : dailyWord.meaningEs) : lang === "en" ? DAILY_WORD.en.gloss : DAILY_WORD.es.gloss}</div>
           </div>
           <Icon name="volume" size={20} stroke="var(--muted)" />
         </button>
@@ -135,12 +141,18 @@ export const Dashboard = ({ lang, onStart, onWord }: { lang: Lang; onStart?: () 
 
       <div style={{ padding: "32px 22px 0" }}>
         <div className="eyebrow" style={{ marginBottom: 14 }}>{t("Your journey", "Tu camino")}</div>
-        {[
+        {(units?.slice(0, 4).map((unit, index) => ({
+          idx: unit.order,
+          qu: unit.title,
+          en: unit.subtitleEn,
+          es: unit.subtitleEs,
+          state: unit.locked ? "lock" : unit.lessonsDone === unit.lessonsTotal ? "done" : index === 1 ? "active" : "next",
+        })) ?? [
           { idx: 1, qu: "Napaykuy", en: "Greetings", es: "Saludos", state: "done" },
           { idx: 2, qu: "Allin pʼunchaw", en: "Greetings of the day", es: "Saludos del día", state: "active" },
           { idx: 3, qu: "Qhatu", en: "At the market", es: "En el mercado", state: "next" },
           { idx: 4, qu: "Mikhuna", en: "Andean food", es: "Comida andina", state: "lock" },
-        ].map((row, i, arr) => (
+        ]).map((row, i, arr) => (
           <div key={row.idx} style={{ display: "flex", gap: 14, alignItems: "stretch" }}>
             <div style={{ width: 32, display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}>
               <div

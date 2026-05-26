@@ -11,46 +11,46 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
         <TextileBand height={10} />
       </div>
 
-      <nav style={{ maxWidth: 1280, margin: "0 auto", padding: "24px 40px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <nav className="landing-nav" style={{ maxWidth: 1280, margin: "0 auto", padding: "24px 40px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <DiamondMark size={26} color="var(--ink)" />
           <div className="serif" style={{ fontSize: 24, letterSpacing: "-0.01em" }}>Kintuq</div>
         </div>
-        <div style={{ display: "flex", gap: 36, fontSize: 14, color: "var(--ink-2)" }}>
+        <div className="landing-nav-links" style={{ display: "flex", gap: 36, fontSize: 14, color: "var(--ink-2)" }}>
           <a href="#about" style={{ color: "inherit", textDecoration: "none" }}>{t("The way", "El camino")}</a>
           <a href="#voices" style={{ color: "inherit", textDecoration: "none" }}>{t("Voices", "Voces")}</a>
           <a href="#culture" style={{ color: "inherit", textDecoration: "none" }}>{t("Culture", "Cultura")}</a>
           <a href="#pricing" style={{ color: "inherit", textDecoration: "none" }}>{t("Pricing", "Precios")}</a>
         </div>
-        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+        <div className="landing-nav-actions" style={{ display: "flex", gap: 10, alignItems: "center" }}>
           <button style={{ fontSize: 14, color: "var(--ink-2)" }}>{t("Sign in", "Entrar")}</button>
           <KButton variant="primary" size="sm" onClick={onLaunchApp}>{t("Open app", "Abrir app")}</KButton>
         </div>
       </nav>
 
-      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 40px 80px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 72, alignItems: "center" }}>
+      <section className="landing-hero" style={{ maxWidth: 1280, margin: "0 auto", padding: "40px 40px 80px" }}>
+        <div className="landing-hero-grid" style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 72, alignItems: "center" }}>
           <div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px", border: "1px solid var(--hairline)", borderRadius: 999, fontSize: 12, color: "var(--ink-2)", marginBottom: 28 }}>
+            <div className="landing-beta-pill" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 12px", border: "1px solid var(--hairline)", borderRadius: 999, fontSize: 12, color: "var(--ink-2)", marginBottom: 28 }}>
               <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--terracotta)" }} />
               {t("Now in private beta · 12,400 learners", "En beta privada · 12,400 estudiantes")}
             </div>
-            <h1 className="serif" style={{ fontSize: 88, lineHeight: 0.95, letterSpacing: "-0.025em", margin: 0, color: "var(--ink)", textWrap: "balance" }}>
+            <h1 className="serif landing-hero-title" style={{ fontSize: 88, lineHeight: 0.95, letterSpacing: "-0.025em", margin: 0, color: "var(--ink)", textWrap: "balance" }}>
               {t("Learn Quechua", "Aprende quechua")}
               <br />
               <span style={{ fontStyle: "italic", color: "var(--terracotta)" }}>{t("through real Andean voices.", "con voces andinas reales.")}</span>
             </h1>
-            <p style={{ fontSize: 19, color: "var(--ink-2)", lineHeight: 1.5, marginTop: 28, maxWidth: 540, textWrap: "pretty" }}>
+            <p className="landing-hero-copy" style={{ fontSize: 19, color: "var(--ink-2)", lineHeight: 1.5, marginTop: 28, maxWidth: 540, textWrap: "pretty" }}>
               {t(
                 "Daily lessons, recorded in the mountain villages of Cusco. Three minutes a day to speak the language of the Andes — and the people who keep it alive.",
                 "Lecciones diarias, grabadas en los pueblos de las montañas de Cusco. Tres minutos al día para hablar la lengua de los Andes — y de la gente que la mantiene viva."
               )}
             </p>
-            <div style={{ display: "flex", gap: 12, marginTop: 36, alignItems: "center" }}>
+            <div className="landing-hero-actions" style={{ display: "flex", gap: 12, marginTop: 36, alignItems: "center" }}>
               <KButton variant="accent" size="lg" iconRight="arrow-r" onClick={onLaunchApp}>{t("Begin your kintu", "Comienza tu kintu")}</KButton>
               <KButton variant="ghost" size="lg" icon="play">{t("Listen to a lesson", "Escucha una lección")}</KButton>
             </div>
-            <div style={{ display: "flex", gap: 28, marginTop: 48, alignItems: "center" }}>
+            <div className="landing-social-proof" style={{ display: "flex", gap: 28, marginTop: 48, alignItems: "center" }}>
               <div style={{ display: "flex" }}>
                 {["#D97757", "#5B7C5A", "#E5B86A", "#8AA9B8"].map((c, i) => (
                   <div key={i} style={{ width: 36, height: 36, borderRadius: "50%", background: `linear-gradient(135deg, ${c}, color-mix(in oklab, ${c} 70%, white))`, border: "2px solid var(--bg)", marginLeft: i ? -10 : 0 }} />
@@ -63,7 +63,7 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
             </div>
           </div>
 
-          <div style={{ position: "relative", height: 640, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div className="landing-hero-media" style={{ position: "relative", height: 640, display: "flex", alignItems: "center", justifyContent: "center" }}>
             <div style={{ position: "absolute", inset: 0, borderRadius: "var(--r-xl)", overflow: "hidden" }}>
               <PhotoPlaceholder ratio="auto" tone="mountain" style={{ height: "100%", borderRadius: "var(--r-xl)" }}>
                 <div style={{ position: "absolute", top: 16, left: 16, fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)" }}>
@@ -71,7 +71,7 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
                 </div>
               </PhotoPlaceholder>
             </div>
-            <div style={{ position: "absolute", top: 60, left: 30, background: "var(--surface)", borderRadius: 18, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, boxShadow: "var(--shadow-lg)", border: "1px solid var(--hairline)", minWidth: 240, animation: "kintuq-float 6s ease-in-out infinite" }}>
+            <div className="landing-float-card landing-float-audio" style={{ position: "absolute", top: 60, left: 30, background: "var(--surface)", borderRadius: 18, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12, boxShadow: "var(--shadow-lg)", border: "1px solid var(--hairline)", minWidth: 240, animation: "kintuq-float 6s ease-in-out infinite" }}>
               <div style={{ width: 38, height: 38, borderRadius: "50%", background: "var(--accent)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Icon name="play" size={14} stroke="#fff" />
               </div>
@@ -80,12 +80,12 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
                 <div style={{ fontSize: 11, color: "var(--muted)" }}>María · San Blás</div>
               </div>
             </div>
-            <div style={{ position: "absolute", bottom: 80, right: 20, background: "var(--surface)", borderRadius: 18, padding: "16px", boxShadow: "var(--shadow-lg)", border: "1px solid var(--hairline)", minWidth: 200, animation: "kintuq-float 7s ease-in-out infinite reverse" }}>
+            <div className="landing-float-card landing-float-word" style={{ position: "absolute", bottom: 80, right: 20, background: "var(--surface)", borderRadius: 18, padding: "16px", boxShadow: "var(--shadow-lg)", border: "1px solid var(--hairline)", minWidth: 200, animation: "kintuq-float 7s ease-in-out infinite reverse" }}>
               <div style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 6 }}>{t("Word of the day", "Palabra del día")}</div>
               <div className="serif" style={{ fontSize: 32, fontStyle: "italic", lineHeight: 1, color: "var(--terracotta)" }}>Munay</div>
               <div style={{ fontSize: 12, color: "var(--ink-2)", marginTop: 4 }}>{t("love · will · to want", "amor · voluntad · querer")}</div>
             </div>
-            <div style={{ position: "absolute", top: 200, right: 50, background: "var(--ink)", color: "var(--bg)", padding: "10px 14px", borderRadius: 999, display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 600, boxShadow: "var(--shadow-md)", animation: "kintuq-float 5s ease-in-out infinite" }}>
+            <div className="landing-float-card landing-float-streak" style={{ position: "absolute", top: 200, right: 50, background: "var(--ink)", color: "var(--bg)", padding: "10px 14px", borderRadius: 999, display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 600, boxShadow: "var(--shadow-md)", animation: "kintuq-float 5s ease-in-out infinite" }}>
               <Icon name="flame" size={14} stroke="var(--terracotta)" />
               <span>{t("7 day streak", "Racha de 7 días")}</span>
             </div>
@@ -126,11 +126,11 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
         <style>{`@keyframes kintuq-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); }}`}</style>
       </div>
 
-      <section id="about" style={{ maxWidth: 1280, margin: "0 auto", padding: "120px 40px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 80, alignItems: "flex-start" }}>
-          <div style={{ position: "sticky", top: 80 }}>
+      <section id="about" className="landing-section landing-about" style={{ maxWidth: 1280, margin: "0 auto", padding: "120px 40px" }}>
+        <div className="landing-about-grid" style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: 80, alignItems: "flex-start" }}>
+          <div className="landing-about-copy" style={{ position: "sticky", top: 80 }}>
             <div className="eyebrow" style={{ marginBottom: 16 }}>{t("The way", "El camino")}</div>
-            <h2 className="serif" style={{ fontSize: 64, lineHeight: 0.98, margin: 0, letterSpacing: "-0.02em" }}>
+            <h2 className="serif landing-section-title" style={{ fontSize: 64, lineHeight: 0.98, margin: 0, letterSpacing: "-0.02em" }}>
               {t("Three leaves.", "Tres hojas.")}
               <br />
               <span style={{ fontStyle: "italic", color: "var(--ink-2)" }}>{t("Three minutes.", "Tres minutos.")}</span>
@@ -150,7 +150,7 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
               { n: "02", label: t("Speak", "Habla"), qu: "Rimay", body: t("Repeat aloud and we listen back. Your phone hears the difference between sumaq and suma. Gentle, never harsh.", "Repite en voz alta y escuchamos. Tu teléfono nota la diferencia entre sumaq y suma. Suave, nunca duro."), tone: "valley" as const },
               { n: "03", label: t("Understand", "Comprende"), qu: "Yachay", body: t("Every word arrives with its cultural ground. Why pacha means both earth and time. Why ayllu is more than community.", "Cada palabra llega con su raíz cultural. Por qué pacha significa tierra y tiempo. Por qué ayllu es más que comunidad."), tone: "sky" as const },
             ].map((step, i) => (
-              <div key={i} style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 32, padding: "32px 0", borderTop: "1px solid var(--hairline)", ...(i === 2 ? { borderBottom: "1px solid var(--hairline)" } : {}) }}>
+              <div className="landing-step" key={i} style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 32, padding: "32px 0", borderTop: "1px solid var(--hairline)", ...(i === 2 ? { borderBottom: "1px solid var(--hairline)" } : {}) }}>
                 <div>
                   <div className="mono" style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>{step.n}</div>
                   <PhotoPlaceholder ratio="4/5" tone={step.tone} style={{ borderRadius: "var(--r-md)" }} />
@@ -168,15 +168,15 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
         </div>
       </section>
 
-      <section id="voices" style={{ background: "var(--bg-2)", padding: "120px 0", position: "relative", overflow: "hidden" }}>
+      <section id="voices" className="landing-section landing-voices" style={{ background: "var(--bg-2)", padding: "120px 0", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, opacity: 0.35 }}>
           <TextileBand height={12} />
         </div>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 40px" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 56 }}>
+        <div className="landing-section-inner" style={{ maxWidth: 1280, margin: "0 auto", padding: "0 40px" }}>
+          <div className="landing-section-heading" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 56 }}>
             <div>
               <div className="eyebrow" style={{ marginBottom: 14 }}>{t("Voices", "Voces")}</div>
-              <h2 className="serif" style={{ fontSize: 56, lineHeight: 1.0, margin: 0, letterSpacing: "-0.02em", maxWidth: 700, textWrap: "balance" }}>
+              <h2 className="serif landing-section-title" style={{ fontSize: 56, lineHeight: 1.0, margin: 0, letterSpacing: "-0.02em", maxWidth: 700, textWrap: "balance" }}>
                 {t("Every phrase you learn is recorded by someone with a name.", "Cada frase que aprendes está grabada por alguien con nombre.")}
               </h2>
             </div>
@@ -185,7 +185,7 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
               {t("native speakers", "hablantes nativos")}
             </div>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
+          <div className="landing-voice-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }}>
             {[
               { name: "María Quispe", village: "San Blás, Cusco", age: 64, qu: "Allillanchu, kawsay sumaq kachun", en: "Hello, may life be beautiful", tone: "valley" as const },
               { name: "Tito Condori", village: "Pisaq", age: 38, qu: "Apu Salkantay, yachachiwayku", en: "Apu Salkantay, teach us", tone: "mountain" as const },
@@ -220,14 +220,14 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
         </div>
       </section>
 
-      <section id="culture" style={{ maxWidth: 1100, margin: "0 auto", padding: "140px 40px", textAlign: "center" }}>
+      <section id="culture" className="landing-section landing-culture" style={{ maxWidth: 1100, margin: "0 auto", padding: "140px 40px", textAlign: "center" }}>
         <div className="eyebrow" style={{ marginBottom: 24 }}>{t("Why Quechua", "¿Por qué quechua?")}</div>
-        <p className="serif" style={{ fontSize: 56, lineHeight: 1.1, letterSpacing: "-0.02em", margin: 0, textWrap: "balance", color: "var(--ink)" }}>
+        <p className="serif landing-section-title" style={{ fontSize: 56, lineHeight: 1.1, letterSpacing: "-0.02em", margin: 0, textWrap: "balance", color: "var(--ink)" }}>
           {t("Quechua is spoken by ", "El quechua es hablado por ")}
           <span style={{ color: "var(--terracotta)", fontStyle: "italic" }}>{t("8 to 10 million people", "8 a 10 millones de personas")}</span>
           {t(" across the Andes — and almost no app teaches it like a living language.", " en los Andes — y casi ninguna app lo enseña como lengua viva.")}
         </p>
-        <div style={{ marginTop: 48, display: "inline-flex", gap: 56, color: "var(--ink-2)" }}>
+        <div className="landing-stat-row" style={{ marginTop: 48, display: "inline-flex", gap: 56, color: "var(--ink-2)" }}>
           {[
             { n: "8M+", l: t("speakers today", "hablantes hoy") },
             { n: "500yr", l: t("continuous oral tradition", "tradición oral continua") },
@@ -241,16 +241,16 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
         </div>
       </section>
 
-      <section id="pricing" style={{ background: "var(--ink)", color: "var(--bg)", padding: "120px 0", position: "relative", overflow: "hidden" }}>
+      <section id="pricing" className="landing-section landing-pricing" style={{ background: "var(--ink)", color: "var(--bg)", padding: "120px 0", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, opacity: 0.25 }}>
           <TextileBand height={14} />
         </div>
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, opacity: 0.25 }}>
           <TextileBand height={14} />
         </div>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 40px", textAlign: "center", position: "relative" }}>
+        <div className="landing-section-inner" style={{ maxWidth: 1100, margin: "0 auto", padding: "0 40px", textAlign: "center", position: "relative" }}>
           <DiamondMark size={48} color="var(--gold)" />
-          <h2 className="serif" style={{ fontSize: 72, lineHeight: 1.0, margin: "24px 0 0", letterSpacing: "-0.02em", textWrap: "balance" }}>
+          <h2 className="serif landing-cta-title" style={{ fontSize: 72, lineHeight: 1.0, margin: "24px 0 0", letterSpacing: "-0.02em", textWrap: "balance" }}>
             {t("Begin your kintu.", "Comienza tu kintu.")}
             <br />
             <span style={{ fontStyle: "italic", color: "var(--gold)" }}>{t("Free, while we’re in beta.", "Gratis, durante la beta.")}</span>
@@ -261,7 +261,7 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
               "El 20% de cada suscripción futura irá directo a las cooperativas de los pueblos que graban el audio."
             )}
           </p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 40 }}>
+          <div className="landing-cta-actions" style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 40 }}>
             <KButton variant="accent" size="lg" iconRight="arrow-r" onClick={onLaunchApp}>{t("Open the app", "Abrir la app")}</KButton>
             <button style={{ padding: "16px 28px", borderRadius: 999, border: "1px solid rgba(247,242,232,0.25)", color: "var(--bg)", fontSize: 16, fontWeight: 500, fontFamily: "var(--font-ui)" }}>
               {t("Read the manifesto", "Leer el manifiesto")}
@@ -270,7 +270,7 @@ export const Landing = ({ lang, onLaunchApp }: { lang: Lang; onLaunchApp?: () =>
         </div>
       </section>
 
-      <footer style={{ maxWidth: 1280, margin: "0 auto", padding: "56px 40px 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", color: "var(--ink-2)", fontSize: 13 }}>
+      <footer className="landing-footer" style={{ maxWidth: 1280, margin: "0 auto", padding: "56px 40px 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", color: "var(--ink-2)", fontSize: 13 }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
             <DiamondMark size={20} color="var(--ink)" />

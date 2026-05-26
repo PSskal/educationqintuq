@@ -22,9 +22,149 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  profile       Profile?
+  progress      UserProgress[]
+  vocabulary    UserVocabulary[]
+  stats         UserStats?
 
   @@unique([email])
   @@map("user")
+}
+
+model Profile {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  displayName         String
+  targetLanguage      String   @default("qu")
+  uiLanguage          String   @default("en")
+  dailyGoal           Int      @default(3)
+  onboardingCompleted Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("profile")
+}
+
+model Unit {
+  id        String   @id
+  title     String
+  subtitleEn String
+  subtitleEs String
+  order     Int
+  locked    Boolean  @default(false)
+  tone      String   @default("mountain")
+  lessons   Lesson[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("unit")
+}
+
+model Lesson {
+  id               String         @id
+  unitId           String
+  unit             Unit           @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  title            String
+  titleEn          String
+  titleEs          String
+  type             String         @default("daily")
+  order            Int
+  estimatedMinutes Int            @default(5)
+  steps            LessonStep[]
+  progress         UserProgress[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([unitId])
+  @@map("lesson")
+}
+
+model LessonStep {
+  id             String   @id
+  lessonId       String
+  lesson         Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  kind           String
+  order          Int
+  quechua        String
+  translationEn  String
+  translationEs  String
+  ipa            String?
+  voice          String?
+  optionsJson    Json?
+  culturalNoteEn String?
+  culturalNoteEs String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([lessonId])
+  @@map("lesson_step")
+}
+
+model VocabularyItem {
+  id             String           @id
+  quechua        String
+  ipa            String?
+  partOfSpeech   String?
+  meaningEn      String
+  meaningEs      String
+  bodyEn         String?
+  bodyEs         String?
+  exampleQuechua String?
+  exampleEn      String?
+  exampleEs      String?
+  audioUrl       String?
+  userVocabulary UserVocabulary[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@map("vocabulary_item")
+}
+
+model UserProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  lessonId    String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson      Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  completed   Boolean   @default(false)
+  xpEarned    Int       @default(0)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([userId, lessonId])
+  @@index([lessonId])
+  @@map("user_progress")
+}
+
+model UserVocabulary {
+  id               String         @id @default(cuid())
+  userId           String
+  vocabularyItemId String
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vocabularyItem   VocabularyItem @relation(fields: [vocabularyItemId], references: [id], onDelete: Cascade)
+  strength         Float          @default(0)
+  lastReviewedAt   DateTime?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@unique([userId, vocabularyItemId])
+  @@index([vocabularyItemId])
+  @@map("user_vocabulary")
+}
+
+model UserStats {
+  id               String    @id @default(cuid())
+  userId           String    @unique
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  xp               Int       @default(0)
+  streakDays       Int       @default(0)
+  lastActivityDate DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@map("user_stats")
 }
 
 model Session {

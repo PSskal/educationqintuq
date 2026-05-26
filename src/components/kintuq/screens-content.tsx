@@ -1,17 +1,18 @@
 "use client";
 // Library, Unit detail, Voices, Speaker, Vocabulary
 import { Icon, KButton, Waveform, StatPill, PhotoPlaceholder, type Lang } from "./primitives";
+import type { KintuqUnit, KintuqVocabularyItem } from "@/lib/kintuq-demo";
 
 const useT = (lang: Lang) => (en: string, es: string) => (lang === "en" ? en : es);
 
-export const LessonsLibrary = ({ lang = "en", onOpenUnit }: { lang?: Lang; onOpenUnit?: () => void }) => {
+export const LessonsLibrary = ({ lang = "en", onOpenUnit, units: unitsProp }: { lang?: Lang; onOpenUnit?: () => void; units?: KintuqUnit[] | null }) => {
   const t = useT(lang);
-  const units = [
-    { idx: 1, qu: "Napaykuy", en: "Greetings", es: "Saludos", done: 5, total: 5, tone: "valley" as const },
-    { idx: 2, qu: "Allin pʼunchaw", en: "Greetings of the day", es: "Saludos del día", done: 3, total: 5, tone: "mountain" as const, active: true },
-    { idx: 3, qu: "Qhatu", en: "At the market", es: "En el mercado", done: 0, total: 6, tone: "sky" as const },
-    { idx: 4, qu: "Mikhuna", en: "Andean food", es: "Comida andina", done: 0, total: 7, tone: "textile" as const, lock: true },
-    { idx: 5, qu: "Pacha", en: "Earth & time", es: "Tierra y tiempo", done: 0, total: 8, tone: "night" as const, lock: true },
+  const units = unitsProp ?? [
+    { id: "1", order: 1, title: "Napaykuy", subtitleEn: "Greetings", subtitleEs: "Saludos", lessonsDone: 5, lessonsTotal: 5, tone: "valley" as const, locked: false },
+    { id: "2", order: 2, title: "Allin pʼunchaw", subtitleEn: "Greetings of the day", subtitleEs: "Saludos del día", lessonsDone: 3, lessonsTotal: 5, tone: "mountain" as const, locked: false },
+    { id: "3", order: 3, title: "Qhatu", subtitleEn: "At the market", subtitleEs: "En el mercado", lessonsDone: 0, lessonsTotal: 6, tone: "sky" as const, locked: false },
+    { id: "4", order: 4, title: "Mikhuna", subtitleEn: "Andean food", subtitleEs: "Comida andina", lessonsDone: 0, lessonsTotal: 7, tone: "textile" as const, locked: true },
+    { id: "5", order: 5, title: "Pacha", subtitleEn: "Earth & time", subtitleEs: "Tierra y tiempo", lessonsDone: 0, lessonsTotal: 8, tone: "night" as const, locked: true },
   ];
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
@@ -22,17 +23,17 @@ export const LessonsLibrary = ({ lang = "en", onOpenUnit }: { lang?: Lang; onOpe
       </div>
       <div style={{ flex: 1, padding: "24px 22px 32px", display: "flex", flexDirection: "column", gap: 14 }}>
         {units.map((u) => (
-          <button key={u.idx} disabled={u.lock} onClick={() => !u.lock && onOpenUnit?.()} style={{ background: "var(--surface)", border: u.active ? "1.5px solid var(--accent)" : "1px solid var(--hairline)", borderRadius: "var(--r-lg)", overflow: "hidden", boxShadow: u.active ? "var(--shadow-md)" : "var(--shadow-sm)", opacity: u.lock ? 0.55 : 1, textAlign: "left", display: "flex", flexDirection: "column" }}>
+          <button key={u.id} disabled={u.locked} onClick={() => !u.locked && onOpenUnit?.()} style={{ background: "var(--surface)", border: u.lessonsDone > 0 && u.lessonsDone < u.lessonsTotal ? "1.5px solid var(--accent)" : "1px solid var(--hairline)", borderRadius: "var(--r-lg)", overflow: "hidden", boxShadow: u.lessonsDone > 0 && u.lessonsDone < u.lessonsTotal ? "var(--shadow-md)" : "var(--shadow-sm)", opacity: u.locked ? 0.55 : 1, textAlign: "left", display: "flex", flexDirection: "column" }}>
             <div style={{ position: "relative", height: 88 }}>
               <PhotoPlaceholder ratio="auto" tone={u.tone} style={{ height: "100%", borderRadius: 0 }}>
                 <div style={{ position: "absolute", inset: 0, padding: 18, display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
-                  <div className="serif" style={{ fontSize: 26, color: "#fff", fontStyle: "italic" }}>{u.qu}</div>
-                  {u.lock && (
+                  <div className="serif" style={{ fontSize: 26, color: "#fff", fontStyle: "italic" }}>{u.title}</div>
+                  {u.locked && (
                     <div style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(0,0,0,0.45)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                       <Icon name="lock" size={16} stroke="#fff" />
                     </div>
                   )}
-                  {u.active && (
+                  {u.lessonsDone > 0 && u.lessonsDone < u.lessonsTotal && (
                     <span style={{ background: "var(--accent)", color: "#fff", padding: "4px 10px", borderRadius: 999, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 600 }}>{t("In progress", "En progreso")}</span>
                   )}
                 </div>
@@ -41,13 +42,13 @@ export const LessonsLibrary = ({ lang = "en", onOpenUnit }: { lang?: Lang; onOpe
             <div style={{ padding: "14px 18px 16px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                 <div>
-                  <div className="eyebrow" style={{ fontSize: 10 }}>{t("Unit", "Unidad")} {String(u.idx).padStart(2, "0")}</div>
-                  <div style={{ fontSize: 14, color: "var(--ink)", marginTop: 2, fontWeight: 500 }}>{t(u.en, u.es)}</div>
+                  <div className="eyebrow" style={{ fontSize: 10 }}>{t("Unit", "Unidad")} {String(u.order).padStart(2, "0")}</div>
+                  <div style={{ fontSize: 14, color: "var(--ink)", marginTop: 2, fontWeight: 500 }}>{t(u.subtitleEn, u.subtitleEs)}</div>
                 </div>
-                <div className="mono" style={{ fontSize: 12, color: "var(--muted)" }}>{u.done}/{u.total}</div>
+                <div className="mono" style={{ fontSize: 12, color: "var(--muted)" }}>{u.lessonsDone}/{u.lessonsTotal}</div>
               </div>
               <div style={{ marginTop: 10, height: 4, background: "var(--hairline)", borderRadius: 2, overflow: "hidden" }}>
-                <div style={{ width: `${(u.done / u.total) * 100}%`, height: "100%", background: u.done === u.total ? "var(--sage)" : "var(--accent)" }} />
+                <div style={{ width: `${(u.lessonsDone / u.lessonsTotal) * 100}%`, height: "100%", background: u.lessonsDone === u.lessonsTotal ? "var(--sage)" : "var(--accent)" }} />
               </div>
             </div>
           </button>
@@ -225,17 +226,17 @@ export const SpeakerDetail = ({ lang = "en", onBack }: { lang?: Lang; onBack?: (
   );
 };
 
-export const VocabLibrary = ({ lang = "en" }: { lang?: Lang }) => {
+export const VocabLibrary = ({ lang = "en", vocabulary }: { lang?: Lang; vocabulary?: KintuqVocabularyItem[] | null }) => {
   const t = useT(lang);
-  const words = [
-    { qu: "Allillanchu", en: "How are you?", es: "¿Cómo estás?", strength: 1.0 },
-    { qu: "Sulpayki", en: "Thank you", es: "Gracias", strength: 1.0 },
-    { qu: "Sumaq", en: "Beautiful", es: "Hermoso", strength: 0.85 },
-    { qu: "Pʼunchaw", en: "Day", es: "Día", strength: 0.7 },
-    { qu: "Munay", en: "Love · will", es: "Amor · voluntad", strength: 0.55 },
-    { qu: "Ayllu", en: "Community", es: "Comunidad", strength: 0.4 },
-    { qu: "Pacha", en: "Earth · time", es: "Tierra · tiempo", strength: 0.3 },
-    { qu: "Yachay", en: "To know", es: "Saber", strength: 0.25 },
+  const words = vocabulary ?? [
+    { id: "1", quechua: "Allillanchu", meaningEn: "How are you?", meaningEs: "¿Cómo estás?", strength: 1.0 },
+    { id: "2", quechua: "Sulpayki", meaningEn: "Thank you", meaningEs: "Gracias", strength: 1.0 },
+    { id: "3", quechua: "Sumaq", meaningEn: "Beautiful", meaningEs: "Hermoso", strength: 0.85 },
+    { id: "4", quechua: "Pʼunchaw", meaningEn: "Day", meaningEs: "Día", strength: 0.7 },
+    { id: "5", quechua: "Munay", meaningEn: "Love · will", meaningEs: "Amor · voluntad", strength: 0.55 },
+    { id: "6", quechua: "Ayllu", meaningEn: "Community", meaningEs: "Comunidad", strength: 0.4 },
+    { id: "7", quechua: "Pacha", meaningEn: "Earth · time", meaningEs: "Tierra · tiempo", strength: 0.3 },
+    { id: "8", quechua: "Yachay", meaningEn: "To know", meaningEs: "Saber", strength: 0.25 },
   ];
   return (
     <div style={{ width: "100%", height: "100%", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
@@ -265,8 +266,8 @@ export const VocabLibrary = ({ lang = "en" }: { lang?: Lang }) => {
         {words.map((w, i) => (
           <button key={i} style={{ padding: "14px 4px", borderBottom: i < words.length - 1 ? "1px solid var(--hairline)" : "none", display: "flex", alignItems: "center", gap: 14, textAlign: "left", background: "transparent" }}>
             <div style={{ flex: 1 }}>
-              <div className="serif" style={{ fontSize: 22, color: "var(--ink)" }}>{w.qu}</div>
-              <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{t(w.en, w.es)}</div>
+              <div className="serif" style={{ fontSize: 22, color: "var(--ink)" }}>{w.quechua}</div>
+              <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{t(w.meaningEn, w.meaningEs)}</div>
             </div>
             <div style={{ display: "flex", gap: 3 }}>
               {[1, 2, 3, 4].map((n) => (
